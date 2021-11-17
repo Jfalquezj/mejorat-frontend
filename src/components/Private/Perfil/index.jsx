@@ -1,50 +1,85 @@
-import { useEffect } from "react";
+import { useContext,useState,useEffect } from "react";
 import {
   StyledCol,
-  Horizontal,
-  IconDiv,
+  CenterWrapper,
+  DivFoto,
+  TopWrapper,
   SpacedHorizontal,
   H2Profile,
   PProfile,
+  Row,
+  Column,
+  Field,
 } from "./profileelements";
+import Foto from "../../../lib/ui/vectors/fotopaciente";
 import { BsCalendarFill } from "react-icons/bs";
-import Button from "../../common/Button";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import SelectIcon from "../../../lib/ui/icons/icons";
+import { AuthContext } from "../../../context/AuthContext";
+import { getPaciente } from "../../../services/pacienteServices";
 
 const Profile = () => {
+  const [patient, setPatient] = useState("");
+  const { user } = useContext(AuthContext);
+  const parsedUser = JSON.parse(user);
+  console.log("userid", parsedUser.userId);
+
+  useEffect(() => {
+    getPaciente(parsedUser.userId).then((data) => {
+      console.log("data",data.paciente)
+      setPatient(data.paciente);
+    })
+    .catch((err) => {
+      console.log("err", err);
+    });
+  },[]);
+
+    console.log("patient", patient);
+    
+  const Paciente = {
+    preferencia_de_lugar: "presencial",
+    historia_clinica: "Depresión, desganado",
+    eps: "Sanitas",
+    edad: 15,
+    UserId: 10,
+    User: {
+      id: 10,
+      username: "jesuspaciente",
+      name: "jesus barros",
+      role: "Paciente",
+      email: "jesuspaciente@gmail.com",
+      phone: null,
+      foto: null,
+      descripcion: "Me siento sin ganas de estudiar",
+    },
+  };
 
   return (
     <>
       <StyledCol>
-        <LazyLoadImage
-          src="https://i.pinimg.com/originals/bd/6c/0b/bd6c0bef4a473bfca44d1f6c83c95006.png"
-          alt="tweetimage"
-          width="100%"
-          height="300vh"
-          style={{
-            width: "100%",
-            display: "block",
-            objectFit: "cover",
-            height: "25vh",
-          }}
-        />
-        <SpacedHorizontal>
-          <H2Profile>jesus</H2Profile>
-          <Button text="Follow" secondary fluid></Button>
-        </SpacedHorizontal>
-        <PProfile>@jesus</PProfile>
-        <Horizontal>
-          <IconDiv>
-            <BsCalendarFill />
-          </IconDiv>
-          <p>Joined in November 2013</p>
-        </Horizontal>
-        <Horizontal>
-          <p>
-            {" "}
-            <b>300</b> Siguiendo <b>17</b> Seguidores
-          </p>
-        </Horizontal>
+        <TopWrapper>
+          <DivFoto>
+            <Foto /><SelectIcon name={"Edit"}/>
+          </DivFoto>
+          <SpacedHorizontal>
+            <H2Profile>{patient ? patient.User.username : ""}</H2Profile>
+          </SpacedHorizontal>
+          <PProfile>{patient ? patient.User.name : ""} </PProfile>
+          <PProfile>{patient ? patient.User.descripcion : ""} </PProfile>
+        </TopWrapper>
+        <CenterWrapper>
+          <Row>
+            <Column>
+              <Field>Email: {patient ? patient.User.email : ""}</Field>
+              <Field>Edad: {patient ? patient.edad : ""}</Field>
+              <Field>Historia clínica: {patient ? patient.historia_clinica : ""}</Field>
+            </Column>
+            <Column>
+              <Field>Teléfono: {patient ? patient.User.phone : ""}</Field>
+              <Field>EPS afiliada: {patient ? patient.eps : ""}</Field>
+              <Field>Modalidad: {patient ? patient.preferencia_de_lugar: ""}</Field>
+            </Column>
+          </Row>
+        </CenterWrapper>
       </StyledCol>
     </>
   );
