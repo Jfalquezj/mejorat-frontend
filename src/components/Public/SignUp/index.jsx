@@ -16,13 +16,17 @@ import {
   StyledContainer,
   DivBoton,
 } from "./signupelements";
+import PacienteSignUp from "./pacienteSignUp";
 
 const SignUp = () => {
+  const [page, setPage] = useState(1);
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setpasswordConfirmation] = useState("");
   const [email, setEmail] = useState("");
+  const [descripcion, setDescripcion] = useState("");
+  const [userId, setUserId] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const auth = useContext(AuthContext);
   const history = useHistory();
@@ -32,28 +36,33 @@ const SignUp = () => {
   const loginusertodashboard = (username, password) => {
     loginUser(username, password)
       .then((data) => {
-        if (data.message === "ok") {
-          const user = data.data;
+        if (data) {
+          const user = data;
           auth.login(user);
-          history.push("/dashboard");
+          //history.push("/dashboard");
         }
       })
       .catch((err) => {
         console.log("err", err);
       });
   };
-  const HandleSingUp = (event) => {
+  const HandleSignUp = (event) => {
     const userInfo = {
+      //preferencia_de_lugar: lugar,
+      //historia_clinica: historiaClinica,
+      //eps: eps,
+      //edad: edad,
       name: name,
       username: username,
       password: password,
       passwordConfirmation: passwordConfirmation,
       email: email,
+      role: "Paciente",
     };
     event.preventDefault();
     singupUser(userInfo)
       .then((data) => {
-        if (data.active) {
+        if (data.user) {
           loginusertodashboard(username, password);
         } else {
           setShowAlert(true);
@@ -65,9 +74,9 @@ const SignUp = () => {
       });
   };
 
-  return (
-    <div style={{ height: "100%", padding: "10px 0" }}>
-      <StyledContainer>
+  function renderSignUp() {
+    if (page === 1) {
+      return (
         <div>
           <div style={{ width: "100%" }}>
             {showAlert ? <AlertSingUp handleClick={handleClick} /> : null}
@@ -124,21 +133,34 @@ const SignUp = () => {
           <DivBoton>
             <Button
               fluid
-              text="Registrarse"
+              text="Siguiente"
               large
               primary
-              onClick={HandleSingUp}
+              onClick={HandleSignUp}
             ></Button>
           </DivBoton>
           <Divaccount>
-            <Link style={{textDecoration: "none"}}to="/login">
+            <Link style={{ textDecoration: "none" }} to="/login">
               <PLogin>
                 Ya tienes una cuenta? <ALogin>Entrar</ALogin>
               </PLogin>
             </Link>
           </Divaccount>
         </div>
-      </StyledContainer>
+      );
+    }
+    if (page === 2) {
+      return (
+        <div>
+          <PacienteSignUp />
+        </div>
+      );
+    }
+  }
+
+  return (
+    <div style={{ height: "100%", padding: "10px 0" }}>
+      <StyledContainer>{renderSignUp()}</StyledContainer>
     </div>
   );
 };

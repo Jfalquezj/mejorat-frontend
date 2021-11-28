@@ -1,4 +1,4 @@
-import { useContext,useState,useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
   StyledCol,
   CenterWrapper,
@@ -20,45 +20,41 @@ import { getPaciente } from "../../../services/pacienteServices";
 const Profile = () => {
   const [patient, setPatient] = useState("");
   const { user } = useContext(AuthContext);
-  const parsedUser = JSON.parse(user);
-  console.log("userid", parsedUser.userId);
+
+  const getUserId = () => {
+    let user = localStorage.getItem("user");;
+    try {
+      const jsonUser = user && JSON.parse(user);
+      const ID = jsonUser?.userId;
+      return ID;
+    } catch (e) {
+      console.log("error",e)
+      const ID = user?.userId;
+      return ID;
+    }
+  };
 
   useEffect(() => {
-    getPaciente(parsedUser.userId).then((data) => {
-      console.log("data",data.paciente)
-      setPatient(data.paciente);
-    })
-    .catch((err) => {
-      console.log("err", err);
-    });
-  },[]);
+    const ID = getUserId();
+    getPaciente(ID)
+      .then((data) => {
+        console.log("data", data.paciente);
+        setPatient(data.paciente);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }, []);
 
-    console.log("patient", patient);
-    
-  const Paciente = {
-    preferencia_de_lugar: "presencial",
-    historia_clinica: "Depresión, desganado",
-    eps: "Sanitas",
-    edad: 15,
-    UserId: 10,
-    User: {
-      id: 10,
-      username: "jesuspaciente",
-      name: "jesus barros",
-      role: "Paciente",
-      email: "jesuspaciente@gmail.com",
-      phone: null,
-      foto: null,
-      descripcion: "Me siento sin ganas de estudiar",
-    },
-  };
+  console.log("patient", patient);
 
   return (
     <>
       <StyledCol>
         <TopWrapper>
           <DivFoto>
-            <Foto /><SelectIcon name={"Edit"}/>
+            <Foto />
+            <SelectIcon name={"Edit"} />
           </DivFoto>
           <SpacedHorizontal>
             <H2Profile>{patient ? patient.User.username : ""}</H2Profile>
@@ -71,12 +67,16 @@ const Profile = () => {
             <Column>
               <Field>Email: {patient ? patient.User.email : ""}</Field>
               <Field>Edad: {patient ? patient.edad : ""}</Field>
-              <Field>Historia clínica: {patient ? patient.historia_clinica : ""}</Field>
+              <Field>
+                Historia clínica: {patient ? patient.historia_clinica : ""}
+              </Field>
             </Column>
             <Column>
               <Field>Teléfono: {patient ? patient.User.phone : ""}</Field>
               <Field>EPS afiliada: {patient ? patient.eps : ""}</Field>
-              <Field>Modalidad: {patient ? patient.preferencia_de_lugar: ""}</Field>
+              <Field>
+                Modalidad: {patient ? patient.preferencia_de_lugar : ""}
+              </Field>
             </Column>
           </Row>
         </CenterWrapper>

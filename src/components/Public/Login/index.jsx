@@ -75,7 +75,7 @@ const Login = () => {
           />
         </Form>
         <Divforgot>
-          <Link to="/recover"> <ALogin>Olvido su contrasena?</ALogin></Link>
+          <Link to="/recover"> <ALogin>Olvidó su contraseña?</ALogin></Link>
         </Divforgot>
         <Button
           fluid
