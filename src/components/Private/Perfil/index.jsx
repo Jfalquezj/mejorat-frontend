@@ -14,20 +14,17 @@ import {
 import Foto from "../../../lib/ui/vectors/fotopaciente";
 import { BsCalendarFill } from "react-icons/bs";
 import SelectIcon from "../../../lib/ui/icons/icons";
-import { AuthContext } from "../../../context/AuthContext";
 import { getPaciente } from "../../../services/pacienteServices";
 import { getPsicologo } from "../../../services/psicologoServices";
 
 const Profile = () => {
   const [patient, setPatient] = useState("");
-  // const { user } = useContext(AuthContext);
   let user = localStorage.getItem("user");
 
   const getUserId = () => {
     try {
       const jsonUser = user && JSON.parse(user);
       const ID = jsonUser?.userId;
-      console.log("id", ID)
       return ID;
     } catch (e) {
       console.log("error", e);
@@ -40,7 +37,6 @@ const Profile = () => {
     try {
       const jsonUser = user && JSON.parse(user);
       const role = jsonUser?.role;
-      console.log("getrole", role)
       return role;
     } catch (e) {
       console.log("error", e);
@@ -52,11 +48,9 @@ const Profile = () => {
   useEffect(() => {
     const ID = getUserId();
     if (getRole() === "Paciente") {
-      console.log("role", getRole());
       getPaciente(ID)
         .then((data) => {
           if (data.paciente) {
-            console.log("data", data.paciente);
             setPatient(data.paciente);
           }
         })
@@ -66,12 +60,9 @@ const Profile = () => {
     }
 
     if (getRole() === "Psicologo") {
-      console.log("role", getRole());
       getPsicologo(ID)
         .then((data) => {
-          console.log("data",data)
           if (data.paciente) {
-            console.log("data", data.paciente);
             setPatient(data.paciente);
           }
         })
