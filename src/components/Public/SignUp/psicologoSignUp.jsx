@@ -3,7 +3,7 @@ import Form from "../../common/Form";
 import Input from "../../common/Input";
 import Vectorbrain from "../../../lib/ui/vectors/vectorbrain";
 import { useState, useContext } from "react";
-import { singupUser, loginUser, createPaciente } from "./../../../services/userService";
+import { singupUser, loginUser, createPsicologo } from "./../../../services/userService";
 import { AuthContext } from "../../../context/AuthContext";
 import { useHistory } from "react-router";
 import { AlertSingUp } from "../../common/Alert";
@@ -17,12 +17,12 @@ import {
   DivBoton,
 } from "./signupelements";
 
-const PacienteSignUp = (props) => {
+const PsicologoSignUp = (props) => {
   const { name , username, email, password, passwordConfirmation, role} = props;
-  const [lugar, setLugar] = useState("");
-  const [historiaClinica, setHistoriaClinica] = useState("");
-  const [eps, setEps] = useState("");
-  const [edad, setEdad] = useState("");
+  const [tarifa, setTarifa] = useState("");
+  const [horas, setHoras] = useState("");
+  const [calificacion, setCalificacion] = useState("");
+  const [especializacion, setEspecializacion] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const auth = useContext(AuthContext);
   const history = useHistory();
@@ -44,17 +44,17 @@ const PacienteSignUp = (props) => {
       });
   };
 
-  const signUpPaciente = (userId) => {
+  const signUpPsicologo = (userId) => {
     const userInfo = {
-        preferencia_de_lugar: lugar,
-        historia_clinica: historiaClinica,
-        eps: eps,
-        edad: edad,
+        tarifa_por_hora: tarifa,
+        horas_trabajadas: horas,
+        calificacion: calificacion,
+        especializacion: especializacion,
         UserId: userId
       };
-    createPaciente(userInfo)
+      createPsicologo(userInfo)
       .then((data) => {
-        if (data.data.paciente) {
+        if (data.data.psicologo) {
             loginusertodashboard(username, password);
           } else {
             console.log("elsepaciente", data)
@@ -80,9 +80,8 @@ const PacienteSignUp = (props) => {
       .then((data) => {
         if (data.user) {
             console.log("data.user.id", data.user.id)
-            signUpPaciente(data.user.id);
+            signUpPsicologo(data.user.id);
         } else {
-            console.log("elsesignup")
           setShowAlert(true);
         }
       })
@@ -102,40 +101,40 @@ const PacienteSignUp = (props) => {
           <H1Login style={{ paddingTop: "10px" }}>Crea tu cuenta</H1Login>
           <Form>
             <Input
-              key="lugar"
-              title="Modalidad"
+              key="tarifa"
+              title="Tarifa por hora"
               type="text"
-              id="lugar"
-              name="lugar"
-              setState={setLugar}
-              state={lugar}
+              id="tarifa"
+              name="tarifa"
+              setState={setTarifa}
+              state={tarifa}
             />
             <Input
-              key="historiaClinica"
-              title="Antecedentes clínicos"
+              key="horas"
+              title="Horas de trabajo"
               type="text"
-              id="historiaClinica"
-              name="historiaClinica"
-              setState={setHistoriaClinica}
-              state={historiaClinica}
+              id="horas"
+              name="horas"
+              setState={setHoras}
+              state={horas}
             />
             <Input
-              key="eps"
-              title="EPS a la que perteneces"
+              key="calificacion"
+              title="Calificación"
               type="text"
-              id="eps"
-              name="eps"
-              setState={setEps}
-              state={eps}
+              id="calificacion"
+              name="calificacion"
+              setState={setCalificacion}
+              state={calificacion}
             />
             <Input
-              key="edad"
-              title="Edad"
+              key="especializacion"
+              title="Especializacion"
               type="text"
-              id="edad"
-              name="edad"
-              setState={setEdad}
-              state={edad}
+              id="especializacion"
+              name="especializacion"
+              setState={setEspecializacion}
+              state={especializacion}
             />
           </Form>
           <DivBoton>
@@ -160,4 +159,4 @@ const PacienteSignUp = (props) => {
   );
 };
 
-export default PacienteSignUp;
+export default PsicologoSignUp;

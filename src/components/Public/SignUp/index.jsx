@@ -17,6 +17,7 @@ import {
   DivBoton,
 } from "./signupelements";
 import PacienteSignUp from "./pacienteSignUp";
+import PsicologoSignUp from './psicologoSignUp';
 
 const SignUp = () => {
   const [page, setPage] = useState(1);
@@ -25,53 +26,25 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setpasswordConfirmation] = useState("");
   const [email, setEmail] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [userId, setUserId] = useState("");
+  const [selectRole, setSelectRole] = useState("Paciente");
   const [showAlert, setShowAlert] = useState(false);
-  const auth = useContext(AuthContext);
-  const history = useHistory();
+
   function handleClick() {
     setShowAlert(false);
   }
-  const loginusertodashboard = (username, password) => {
-    loginUser(username, password)
-      .then((data) => {
-        if (data) {
-          const user = data;
-          auth.login(user);
-          //history.push("/dashboard");
-        }
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
+
+  const roleChange = (event) => {
+    setSelectRole(event.target.value);
   };
-  const HandleSignUp = (event) => {
-    const userInfo = {
-      //preferencia_de_lugar: lugar,
-      //historia_clinica: historiaClinica,
-      //eps: eps,
-      //edad: edad,
-      name: name,
-      username: username,
-      password: password,
-      passwordConfirmation: passwordConfirmation,
-      email: email,
-      role: "Paciente",
-    };
-    event.preventDefault();
-    singupUser(userInfo)
-      .then((data) => {
-        if (data.user) {
-          loginusertodashboard(username, password);
-        } else {
-          setShowAlert(true);
-        }
-      })
-      .catch((err) => {
-        console.log("fallo todo");
-        console.log("err", err);
-      });
+
+  const HandleSignUp = () => {
+    console.log("selectRole", selectRole);
+    if(selectRole === "Paciente"){
+    setPage(2);
+    }
+    if(selectRole === "Psicologo"){
+      setPage(3);
+      }
   };
 
   function renderSignUp() {
@@ -129,6 +102,10 @@ const SignUp = () => {
               setState={setpasswordConfirmation}
               state={passwordConfirmation}
             />
+            <select key="selectRole" value={selectRole} onChange={roleChange}>
+              <option value="Paciente">Paciente</option>
+              <option value="Psicologo">Psicologo</option>
+            </select>
           </Form>
           <DivBoton>
             <Button
@@ -152,7 +129,28 @@ const SignUp = () => {
     if (page === 2) {
       return (
         <div>
-          <PacienteSignUp />
+          <PacienteSignUp
+            name={name}
+            username={username}
+            email={email}
+            password={password}
+            passwordConfirmation={passwordConfirmation}
+            role={selectRole}
+          />
+        </div>
+      );
+    }
+    if (page === 3) {
+      return (
+        <div>
+          <PsicologoSignUp
+            name={name}
+            username={username}
+            email={email}
+            password={password}
+            passwordConfirmation={passwordConfirmation}
+            role={selectRole}
+          />
         </div>
       );
     }
