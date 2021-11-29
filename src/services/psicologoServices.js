@@ -5,4 +5,9 @@ const getallpsicologos = async () => {
     return psicologos.psicologo;
 }
 
-export {getallpsicologos}
+const getPsicologo = async (userId) => {
+    const psicologo = await get(`psicologo/${userId}`);
+    return psicologo;
+}
+
+export {getallpsicologos, getPsicologo}
