@@ -18,7 +18,6 @@ const Side = ({ active }) => {
   const history = useHistory();
   const { user } = useContext(AuthContext);
   const getRole = () => {
-    //let user = localStorage.getItem("user");
     try {
       const jsonUser = user && JSON.parse(user);
       const role = jsonUser?.role;
@@ -44,9 +43,8 @@ const Side = ({ active }) => {
   });
 
   const { restricted } = routes;
-  
-  let result = null;
 
+  let result = null;
 
   const roleShow = () => {
     console.log("sidebar")
