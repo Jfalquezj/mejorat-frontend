@@ -9,7 +9,7 @@ export const NavContainer = styled.div`
 
 export const PHome = styled(P)`
   text-align: left;
-  font-size: 19px;
+  font-size: 25px;
   line-height: 22px;
   font-style: normal;
   font-weight: bold;

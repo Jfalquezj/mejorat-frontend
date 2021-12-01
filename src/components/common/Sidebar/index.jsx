@@ -11,7 +11,7 @@ import SelectIcon from "../../../lib/ui/icons/icons";
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory, withRouter } from "react-router-dom";
 import { logoffUser } from "./../../../services/userService";
-import { AuthContext } from "../../../context/AuthContext";
+import Vectorbrain from "../../../lib/ui/vectors/vectorbrain";
 
 const Side = ({ active }) => {
   const [isMobile, setMobile] = useState(window.innerWidth > 1200);
@@ -73,14 +73,12 @@ const Side = ({ active }) => {
 
   return (
     <NavContainer style={{ overflowY: "auto", height: "calc(100vh )" }}>
-      {roleShow()}
+      <div style={{display: "flex", alignContent:"center",width: "100%",justifyContent: "center",marginBottom:"20px"}}><Vectorbrain></Vectorbrain></div>
       {result.map(({ path, title, index }) => (
         <SidebarElements key={index} to={path}>
-          <DivElement
-            key ={index} style={{ color: active === title ? "#1da1f2" : "#333333" }}
-          >
-            <SelectIcon key ={index} name={title} />
-            <PHome key ={index}>{title}</PHome>
+          <DivElement style={{ color: active === title ? "#1da1f2" : "#333333" }}>
+            <SelectIcon  name={title} />
+            <PHome >{title}</PHome>
           </DivElement>
         </SidebarElements>
       ))}

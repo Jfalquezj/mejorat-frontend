@@ -38,6 +38,11 @@ const routes = {
       path: "/perfil",
       component: Dashboard,
     },
+    {
+      title: "PerfilP",
+      path: "/psicologo/:id",
+      component: Dashboard,
+    },
   ],
   unrestricted: [
     {

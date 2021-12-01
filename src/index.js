@@ -8,6 +8,7 @@ render(
   <React.StrictMode>
     <AuthProvider>
       <App />
+      
     </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')

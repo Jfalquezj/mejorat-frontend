@@ -12,12 +12,13 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           {restricted.map(({ path, component }) => (
-            <PrivateRoute key={path} path={path} component={component} />
+            <PrivateRoute key={path} exact  path={path} component={component} />
           ))}
           {unrestricted.map(({ path, component }) => (
             <PublicRoute key={path} exact path={path} component={component} />
           ))}
         </Switch>
+        <Redirect from="*" to="/" />
       </BrowserRouter>
     </main>
   );
