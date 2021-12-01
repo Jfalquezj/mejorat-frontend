@@ -1,8 +1,11 @@
 import React from "react";
-import { getCitasConfirmadasByPaciente, getCitasConfirmadasByPsicologo } from "../../../services/citaServices";
+import {
+  getCitasConfirmadasByPaciente,
+  getCitasConfirmadasByPsicologo,
+} from "../../../services/citaServices";
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import TarjetaCita from './TarjetaCita/index';
+import TarjetaCita from "./TarjetaCita/index";
 import { AuthContext } from "../../../context/AuthContext";
 import { getPaciente } from "../../../services/pacienteServices";
 import { getPsicologo } from "../../../services/psicologoServices";
@@ -10,7 +13,6 @@ import { getPsicologo } from "../../../services/psicologoServices";
 export default function MisCitas() {
   const [citas, setCitas] = useState([]);
   const { user } = useContext(AuthContext);
-
 
   const getUserId = () => {
     try {
@@ -44,25 +46,29 @@ export default function MisCitas() {
         .then((data) => {
           if (data.paciente) {
             getCitasConfirmadasByPaciente(data.paciente.id).then((data) => {
-                const elem = data.map((cita) => {
-                  return (
-                    <Link to={`/cita/${cita.cita_id}`} style={{textDecoration: "none",color:'black'}}>
-                      <TarjetaCita
-                        key={cita.cita_id}
-                        id={cita.cita_id}
-                        fecha={cita.fecha}
-                        paciente_id={cita.paciente_id}
-                        duracion={cita.duracion}
-                        descripcion={cita.descripcion}
-                        estado={cita.estado}
-                        lugar={cita.lugar}
-                        role={role}
-                      />
-                    </Link>
-                  );
-                });
-                setCitas(elem);
+              console.log("data", data);
+              const elem = data.map((cita) => {
+                return (
+                  <Link
+                    to={`/cita/${cita.cita_id}`}
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <TarjetaCita
+                      key={cita.cita_id}
+                      id={cita.cita_id}
+                      fecha={cita.fecha}
+                      paciente_id={cita.paciente_id}
+                      duracion={cita.duracion}
+                      descripcion={cita.descripcion}
+                      estado={cita.estado}
+                      lugar={cita.lugar}
+                      role={role}
+                    />
+                  </Link>
+                );
               });
+              setCitas(elem);
+            });
           }
         })
         .catch((err) => {
@@ -75,36 +81,40 @@ export default function MisCitas() {
         .then((data) => {
           if (data.paciente) {
             getCitasConfirmadasByPsicologo(data.paciente.id).then((data) => {
-                const elem = data.map((cita) => {
-                  return (
-                    <Link to={`/cita/${cita.cita_id}`} style={{textDecoration: "none",color:'black'}}>
-                      <TarjetaCita
-                        key={cita.cita_id}
-                        id={cita.cita_id}
-                        fecha={cita.fecha}
-                        paciente_id={cita.paciente_id}
-                        duracion={cita.duracion}
-                        descripcion={cita.descripcion}
-                        estado={cita.estado}
-                        lugar={cita.lugar}
-                        role={role}
-                      />
-                    </Link>
-                  );
-                });
-                setCitas(elem);
+              console.log("data", data);
+              const elem = data.map((cita) => {
+                return (
+                  <Link
+                    to={`/cita/${cita.cita_id}`}
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <TarjetaCita
+                      key={cita.cita_id}
+                      id={cita.cita_id}
+                      fecha={cita.fecha}
+                      paciente_id={cita.paciente_id}
+                      duracion={cita.duracion}
+                      descripcion={cita.descripcion}
+                      estado={cita.estado}
+                      lugar={cita.lugar}
+                      role={role}
+                    />
+                  </Link>
+                );
               });
+              setCitas(elem);
+            });
           }
         })
         .catch((err) => {
           console.log("err", err);
         });
     }
-  },[]);
+  }, []);
 
   return (
     <div>
-      <h1>Lista de psicólogos</h1>
+      <h1>Mis citas</h1>
       {citas}
     </div>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { DivTarjeta, DivInfo, DivFoto, Precio } from "./tarjetacitaelements";
+import { DivTarjeta, DivInfo, DivFoto, Precio, DivInfoBorder } from "./tarjetacitaelements";
 import { confirmarCita } from "../../../../services/citaServices";
 import Foto from "../../../../lib/ui/vectors/fotopsicologo";
 import Button from "../../../common/Button";
@@ -27,9 +27,13 @@ export default function TarjetaCita(props) {
         Id paciente: <p>{paciente_id}</p>
         Estado: <p>{estado}</p>
       </DivInfo>
+      <DivInfoBorder>
+      <p>Descripción:</p>
+      <p>{descripcion}</p>
+      </DivInfoBorder>
       <Precio>
-        <p>{descripcion}</p>
-        <Button onClick={confirmarCita(id)} text="Confirmar" primary fluid/>
+        <p>Lugar: {lugar}</p>
+        <Button text="Confirmar" primary fluid/>
       </Precio>
     </DivTarjeta>
   );

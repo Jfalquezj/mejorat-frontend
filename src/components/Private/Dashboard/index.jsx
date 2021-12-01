@@ -7,6 +7,7 @@ import Perfil from "../Perfil/index";
 import MisCitas from '../MisCitas/index';
 import Pendientes from '../Pendientes/index';
 import CitaPage from '../CitaPage/index';
+import PerfilP from '../Psicologos/perfil/perfilpsicologo';
 
 const Dashboard = () => {
   const [title, setTitle] = useState("");
@@ -34,6 +35,9 @@ const Dashboard = () => {
               </Route>
               <Route path="/pendientes">
                 <Pendientes />
+              </Route>
+              <Route path="/psicologo/:id">
+                <PerfilP />
               </Route>
             </Switch>
           </TimelineDiv>

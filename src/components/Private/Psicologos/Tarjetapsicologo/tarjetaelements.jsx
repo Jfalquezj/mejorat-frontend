@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
 export const DivTarjeta = styled.div`
+  margin: 15px;
+  padding: 15px;
+  border: 2px;
+  border-color: #dddddd;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

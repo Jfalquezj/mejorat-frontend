@@ -1,8 +1,11 @@
 import React from "react";
-import { getCitasPendientesByPaciente, getCitasPendientesByPsicologo } from "../../../services/citaServices";
+import {
+  getCitasPendientesByPaciente,
+  getCitasPendientesByPsicologo,
+} from "../../../services/citaServices";
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import TarjetaCita from './TarjetaCita/index';
+import TarjetaCita from "./TarjetaCita/index";
 import { AuthContext } from "../../../context/AuthContext";
 import { getPaciente } from "../../../services/pacienteServices";
 import { getPsicologo } from "../../../services/psicologoServices";
@@ -10,7 +13,6 @@ import { getPsicologo } from "../../../services/psicologoServices";
 export default function Pendientes() {
   const [citas, setCitas] = useState([]);
   const { user } = useContext(AuthContext);
-
 
   const getUserId = () => {
     try {
@@ -43,26 +45,31 @@ export default function Pendientes() {
       getPaciente(ID)
         .then((data) => {
           if (data.paciente) {
+            console.log("data.paciente",data.paciente)
             getCitasPendientesByPaciente(data.paciente.id).then((data) => {
-                const elem = data.map((cita) => {
-                  return (
-                    <Link to={`/cita/${cita.cita_id}`} style={{textDecoration: "none",color:'black'}}>
-                      <TarjetaCita
-                        key={cita.cita_id}
-                        id={cita.cita_id}
-                        fecha={cita.fecha}
-                        paciente_id={cita.paciente_id}
-                        duracion={cita.duracion}
-                        descripcion={cita.descripcion}
-                        estado={cita.estado}
-                        lugar={cita.lugar}
-                        role={role}
-                      />
-                    </Link>
-                  );
-                });
-                setCitas(elem);
+              console.log("data", data);
+              const elem = data.map((cita) => {
+                return (
+                  <Link
+                    to={`/cita/${cita.cita_id}`}
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <TarjetaCita
+                      key={cita.cita_id}
+                      id={cita.cita_id}
+                      fecha={cita.fecha}
+                      paciente_id={cita.paciente_id}
+                      duracion={cita.duracion}
+                      descripcion={cita.descripcion}
+                      estado={cita.estado}
+                      lugar={cita.lugar}
+                      role={role}
+                    />
+                  </Link>
+                );
               });
+              setCitas(elem);
+            });
           }
         })
         .catch((err) => {
@@ -74,35 +81,37 @@ export default function Pendientes() {
       getPsicologo(ID)
         .then((data) => {
           if (data.paciente) {
+            console.log("data.psicologo",data.paciente)
             getCitasPendientesByPsicologo(data.paciente.id).then((data) => {
-                const elem = data.map((cita) => {
-                  return (
-                      <TarjetaCita
-                        key={cita.cita_id}
-                        id={cita.cita_id}
-                        fecha={cita.fecha}
-                        paciente_id={cita.paciente_id}
-                        duracion={cita.duracion}
-                        descripcion={cita.descripcion}
-                        estado={cita.estado}
-                        lugar={cita.lugar}
-                        role={role}
-                      />
-                  );
-                });
-                setCitas(elem);
+              console.log("data", data);
+              const elem = data.map((cita) => {
+                return (
+                  <TarjetaCita
+                    key={cita.cita_id}
+                    id={cita.cita_id}
+                    fecha={cita.fecha}
+                    paciente_id={cita.paciente_id}
+                    duracion={cita.duracion}
+                    descripcion={cita.descripcion}
+                    estado={cita.estado}
+                    lugar={cita.lugar}
+                    role={role}
+                  />
+                );
               });
+              setCitas(elem);
+            });
           }
         })
         .catch((err) => {
           console.log("err", err);
         });
     }
-  },[]);
+  }, []);
 
   return (
     <div>
-      <h1>Lista de psicólogos</h1>
+      <h1>Citas pendientes</h1>
       {citas}
     </div>
   );
