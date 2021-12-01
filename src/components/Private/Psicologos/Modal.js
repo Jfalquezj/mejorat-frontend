@@ -1,7 +1,12 @@
-import React, { useRef, useEffect, useCallback } from 'react';
-import styled from 'styled-components';
-import { MdClose } from 'react-icons/md';
-import ReactDom from 'react-dom';
+import React, { useRef, useEffect, useCallback } from "react";
+import styled from "styled-components";
+import { MdClose } from "react-icons/md";
+import ReactDom from "react-dom";
+import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
+import DateAdapter from "@mui/lab/AdapterMoment";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import TextField from "@mui/material/TextField";
+import TimePicker from '@mui/lab/TimePicker';
 
 const Background = styled.div`
   width: 100%;
@@ -17,7 +22,7 @@ const Background = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: 'rgba(0, 0, 0, .7)';
+  background-color: "rgba(0, 0, 0, .7)";
 `;
 
 const ModalWrapper = styled.div`
@@ -26,8 +31,8 @@ const ModalWrapper = styled.div`
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
   background: #fff;
   color: #000;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   position: relative;
   z-index: 10;
   border-radius: 10px;
@@ -73,51 +78,70 @@ const CloseModalButton = styled(MdClose)`
 
 export const Modal = ({ showModal, setShowModal }) => {
   const modalRef = useRef();
+  const [value, setValue] = React.useState(new Date("2014-08-18T21:11:54"));
 
-  const closeModal = e => {
+  const handleChange = (newValue) => {
+    setValue(newValue);
+  };
+  const closeModal = (e) => {
     if (modalRef.current === e.target) {
       setShowModal(false);
     }
   };
 
   const keyPress = useCallback(
-    e => {
-      if (e.key === 'Escape' && showModal) {
+    (e) => {
+      if (e.key === "Escape" && showModal) {
         setShowModal(false);
-        console.log('I pressed');
+        console.log("I pressed");
       }
     },
     [setShowModal, showModal]
   );
 
-  useEffect(
-    () => {
-      document.addEventListener('keydown', keyPress);
-      return () => document.removeEventListener('keydown', keyPress);
-    },
-    [keyPress]
-  );
+  useEffect(() => {
+    document.addEventListener("keydown", keyPress);
+    return () => document.removeEventListener("keydown", keyPress);
+  }, [keyPress]);
 
   return ReactDom.createPortal(
     <>
       {showModal ? (
         <Background onClick={closeModal} ref={modalRef}>
-            <ModalWrapper showModal={showModal}>
-              <ModalContent>
-                <h1>Pedir cita</h1>
-                <h3>Hora de la cita</h3>
-                <h3>Dia de la cita</h3>
-                <h3>Descripcion</h3>
-                <button>Enviar cita</button>
-              </ModalContent>
-              <CloseModalButton
-                aria-label='Close modal'
-                onClick={() => setShowModal(prev => !prev)}
-              />
-            </ModalWrapper>
+          <ModalWrapper showModal={showModal}>
+            <ModalContent>
+              <form>
+                <LocalizationProvider dateAdapter={DateAdapter}>
+                  <h1>Pedir cita</h1>
+                  <h3>Hora de la cita</h3>
+                  <TimePicker
+                    label="Time"
+                    value={value}
+                    onChange={handleChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                  <h3>Dia de la cita</h3>
+                  <DesktopDatePicker
+                    label="Date desktop"
+                    inputFormat="MM/dd/yyyy"
+                    value={value}
+                    onChange={handleChange}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                  <h3>Descripcion</h3>
+                  <textarea style={{ width: "100%" }} />
+                  <button>Enviar cita</button>
+                </LocalizationProvider>
+              </form>
+            </ModalContent>
+            <CloseModalButton
+              aria-label="Close modal"
+              onClick={() => setShowModal((prev) => !prev)}
+            />
+          </ModalWrapper>
         </Background>
       ) : null}
     </>,
-    document.getElementById('portal')
+    document.getElementById("portal")
   );
 };

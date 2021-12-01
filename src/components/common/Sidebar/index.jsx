@@ -12,6 +12,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useHistory, withRouter } from "react-router-dom";
 import { logoffUser } from "./../../../services/userService";
 import Vectorbrain from "../../../lib/ui/vectors/vectorbrain";
+import {AuthContext} from "../../../context/AuthContext"
 
 const Side = ({ active }) => {
   const [isMobile, setMobile] = useState(window.innerWidth > 1200);
@@ -74,6 +75,7 @@ const Side = ({ active }) => {
   return (
     <NavContainer style={{ overflowY: "auto", height: "calc(100vh )" }}>
       <div style={{display: "flex", alignContent:"center",width: "100%",justifyContent: "center",marginBottom:"20px"}}><Vectorbrain></Vectorbrain></div>
+      {roleShow()}
       {result.map(({ path, title, index }) => (
         <SidebarElements key={index} to={path}>
           <DivElement style={{ color: active === title ? "#1da1f2" : "#333333" }}>
