@@ -29,7 +29,7 @@ export default function TarjetaCita(props) {
       </DivInfo>
       <Precio>
         <p>{descripcion}</p>
-        <Button onClick={confirmarCita(id)} text="Confirmar" primary fluid/>
+        <Button onClick={confirmarCita(id)} text="Completar" primary fluid/>
       </Precio>
     </DivTarjeta>
   );

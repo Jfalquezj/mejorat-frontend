@@ -21,7 +21,7 @@ const routes = {
     {
       title: "Mis Citas",
       path: "/citas",
-      component: MisCitas,
+      component: Dashboard,
     },
     {
       title: "Pendientes",
@@ -36,7 +36,7 @@ const routes = {
     {
       title: "Mi Perfil",
       path: "/perfil",
-      component: Profile,
+      component: Dashboard,
     },
   ],
   unrestricted: [
