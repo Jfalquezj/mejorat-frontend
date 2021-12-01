@@ -11,10 +11,9 @@ const Dashboard = () => {
   return (
     <BrowserRouter>
       <Divmain>
-        <ColNav>
-          <div className="position-fixed">
+        <ColNav style={{marginRight:'5vw'}}>
             <Sidebar active={title}></Sidebar>
-          </div>
+       
         </ColNav>
         <div style={{ widht: "990px", display: "flex" }}>
           <TimelineDiv>

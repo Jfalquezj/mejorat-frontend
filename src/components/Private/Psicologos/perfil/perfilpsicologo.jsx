@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from 'react';
 import { DivPerfil, Row1, Row2 } from "./perfilelements";
 import Foto from "../../../../lib/ui/vectors/fotopsicologo";
 import { useParams } from "react-router";
+import { Modal } from '../Modal';
+
 
 export default function Perfilpsicologo() {
   let { id } = useParams();
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(prev => !prev);
+  };
   return (
     <DivPerfil>
       <Row1>
@@ -24,7 +31,8 @@ export default function Perfilpsicologo() {
           more recently with desktop publishing software like Aldus PageMaker
           including versions of Lorem Ipsum.{" "}
         </p>
-        <div style={{background: 'red'}}>Agendar Cita</div>
+        <div onClick={openModal}>Agendar Cita</div>
+        <Modal showModal={showModal} setShowModal={setShowModal} />
       </Row2>
     </DivPerfil>
   );

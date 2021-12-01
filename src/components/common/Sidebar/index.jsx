@@ -42,7 +42,7 @@ const Side = ({ active }) => {
   );
   return (
     <NavContainer style={{ overflowY: "auto", height: "calc(100vh )" }}>
-      <Vectorbrain></Vectorbrain>
+      <div style={{display: "flex", alignContent:"center",width: "100%",justifyContent: "center",marginBottom:"20px"}}><Vectorbrain></Vectorbrain></div>
       {result.map(({ path, title, index }) => (
         <SidebarElements key={index} to={path}>
           <DivElement style={{ color: active === title ? "#1da1f2" : "#333333" }}>
