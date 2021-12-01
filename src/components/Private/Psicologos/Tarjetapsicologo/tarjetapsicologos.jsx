@@ -14,7 +14,7 @@ export default function Tarjetaelements(props) {
                 <h4><Foto /></h4>
                 </DivFoto>
                 <DivInfo>
-                <h4>Psicologo {id}</h4>
+                <h4>Psicólogo {id}</h4>
                 <p>{calificacion}</p>
                 </DivInfo>
                 <Precio>

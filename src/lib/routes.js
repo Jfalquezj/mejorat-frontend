@@ -3,7 +3,8 @@ import SignUp from "./../components/Public/SignUp";
 import Home from "./../components/Public/Home";
 import Recover from "./../components/Public/Recover";
 import Dashboard from "./../components/Private/Dashboard";
-import PerfilP from "./../components/Private/Psicologos/perfil/perfilpsicologo"
+import Profile from "./../components/Private/Perfil";
+import MisCitas from "./../components/Private/MisCitas";
 
 const routes = {
   restricted: [
@@ -20,7 +21,7 @@ const routes = {
     {
       title: "Mis Citas",
       path: "/citas",
-      component: Dashboard,
+      component: MisCitas,
     },
     {
       title: "Pendientes",
@@ -35,7 +36,7 @@ const routes = {
     {
       title: "Mi Perfil",
       path: "/perfil",
-      component: Dashboard,
+      component: Profile,
     },
     {
       title: "PerfilP",

@@ -8,7 +8,7 @@ import {
 } from "./sidebarelements";
 import Button from "../../common/Button";
 import SelectIcon from "../../../lib/ui/icons/icons";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory, withRouter } from "react-router-dom";
 import { logoffUser } from "./../../../services/userService";
 import Vectorbrain from "../../../lib/ui/vectors/vectorbrain";
@@ -16,6 +16,18 @@ import Vectorbrain from "../../../lib/ui/vectors/vectorbrain";
 const Side = ({ active }) => {
   const [isMobile, setMobile] = useState(window.innerWidth > 1200);
   const history = useHistory();
+  const { user } = useContext(AuthContext);
+  const getRole = () => {
+    try {
+      const jsonUser = user && JSON.parse(user);
+      const role = jsonUser?.role;
+      return role;
+    } catch (e) {
+      console.log("error", e);
+      const role = user?.role;
+      return role;
+    }
+  };
 
   const updateMedia = () => {
     setMobile(window.innerWidth > 1200);
@@ -31,15 +43,34 @@ const Side = ({ active }) => {
   });
 
   const { restricted } = routes;
-  const result = restricted.filter((word) =>
-    [
-      "Psicologos",
-      "Mis Citas",
-      "Pendientes",
-      "Historial",
-      "Mi Perfil",
-    ].includes(word.title)
-  );
+
+  let result = null;
+
+  const roleShow = () => {
+    console.log("sidebar")
+    if (getRole() === "Paciente") {
+      result = restricted.filter((word) =>
+      [
+        "Psicologos",
+        "Mis Citas",
+        "Pendientes",
+        "Historial",
+        "Mi Perfil",
+      ].includes(word.title)
+      );
+    };
+    if (getRole() === "Psicologo") {
+      result = restricted.filter((word) =>
+      [
+        "Mis Citas",
+        "Pendientes",
+        "Historial",
+        "Mi Perfil",
+      ].includes(word.title)
+      );
+    };
+  }
+
   return (
     <NavContainer style={{ overflowY: "auto", height: "calc(100vh )" }}>
       <div style={{display: "flex", alignContent:"center",width: "100%",justifyContent: "center",marginBottom:"20px"}}><Vectorbrain></Vectorbrain></div>

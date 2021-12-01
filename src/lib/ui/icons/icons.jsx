@@ -7,6 +7,7 @@ import { CgProfile } from "react-icons/cg";
 import { BiMessageRounded } from "react-icons/bi";
 import { FaRetweet } from "react-icons/fa";
 import { AiOutlineHeart } from "react-icons/ai";
+import { AiTwotoneEdit } from "react-icons/ai";
 import { HiInboxIn } from "react-icons/hi";
 import { AiFillDelete } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
@@ -55,6 +56,8 @@ const SelectIcon = ({ name }) => {
       return <AiOutlineFileGif size={tweetsize} color={tweetcolor} />;
     case "Image":
       return <BsImage size={tweetsize} color={tweetcolor} />;
+    case "Edit":
+      return <AiTwotoneEdit style={{cursor:'pointer'}} size={tweetsize} color={tweetcolor} />;
     default:
       return <></>;
   }

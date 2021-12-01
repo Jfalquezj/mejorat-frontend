@@ -2,9 +2,10 @@ import Sidebar from "../../common/Sidebar/index";
 import { ColNav, Divmain, Divside, TimelineDiv } from "./dashboardelements";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Psicologos from "../Psicologos/index"
-import Perfil from "../Perfil/index"
-import PerfilP from "../Psicologos/perfil/perfilpsicologo"
+import Psicologos from "../Psicologos/index";
+import Perfil from "../Perfil/index";
+import MisCitas from '../MisCitas/index';
+import Pendientes from '../Pendientes/index';
 
 const Dashboard = () => {
   const [title, setTitle] = useState("");
@@ -24,8 +25,11 @@ const Dashboard = () => {
               <Route path="/perfil">
                 <Perfil />
               </Route>
-              <Route path="/psicologo/:id">
-                <PerfilP />
+              <Route path="/citas">
+                <MisCitas />
+              </Route>
+              <Route path="/pendientes">
+                <Pendientes />
               </Route>
             </Switch>
           </TimelineDiv>

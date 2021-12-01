@@ -24,13 +24,13 @@ const Home = () => (
         <StyledHomeCol>
           <div>
             <DivVector><Vectorbrain /></DivVector>
-            <H1Home>Bienvenido a MejoraT</H1Home>
+            <H1Home>Bienvenido a Mejora-T</H1Home>
             <Link to="/login">
               <Button large text="Login now" secondary fluid></Button>
             </Link>
             <PHome>
-              Don't have an account?{" "}
-              <Link to="/signup"> <AHome>Join free today</AHome></Link>
+              No tienes una cuenta ?{" "}
+              <Link to="/signup"> <AHome>Únete gratis</AHome></Link>
             </PHome>
             <Link to="/signup">
               <Button large text="Sign Up" secondary fluid></Button>

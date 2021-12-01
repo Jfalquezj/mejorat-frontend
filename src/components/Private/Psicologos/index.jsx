@@ -26,7 +26,7 @@ export default function Psicologos() {
 
   return (
     <div>
-      <h1>Aqui van los psicologos</h1>
+      <h1>Lista de psicólogos</h1>
       {psico}
     </div>
   );
