@@ -2,11 +2,7 @@ import React, { useRef, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
 import ReactDom from "react-dom";
-import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
-import DateAdapter from "@mui/lab/AdapterMoment";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import TextField from "@mui/material/TextField";
-import TimePicker from "@mui/lab/TimePicker";
+import Button from "../../../common/Button";
 
 const Background = styled.div`
   width: 100%;
@@ -26,13 +22,15 @@ const Background = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  width: 800px;
+  width: 750px;
   height: 500px;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
   background: #fff;
   color: #000;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: relative;
   z-index: 10;
   border-radius: 10px;
@@ -110,6 +108,12 @@ export const HistorialModal = ({ showModal, setShowModal, descripcion }) => {
                 <h2>Recomendaciones y/o medicamentos: </h2>
                 <p>{descripcion}</p>
               </form>
+              <Button
+                fluid
+                text="Chatear con psicólogo"
+                large
+                primary
+              ></Button>
             </ModalContent>
             <CloseModalButton
               aria-label="Close modal"

@@ -45,15 +45,9 @@ export default function Pendientes() {
       getPaciente(ID)
         .then((data) => {
           if (data.paciente) {
-            console.log("data.paciente",data.paciente)
             getCitasPendientesByPaciente(data.paciente.id).then((data) => {
-              console.log("data", data);
               const elem = data.map((cita) => {
                 return (
-                  <Link
-                    to={`/cita/${cita.cita_id}`}
-                    style={{ textDecoration: "none", color: "black" }}
-                  >
                     <TarjetaCita
                       key={cita.cita_id}
                       id={cita.cita_id}
@@ -65,7 +59,6 @@ export default function Pendientes() {
                       lugar={cita.lugar}
                       role={role}
                     />
-                  </Link>
                 );
               });
               setCitas(elem);
@@ -81,9 +74,7 @@ export default function Pendientes() {
       getPsicologo(ID)
         .then((data) => {
           if (data.paciente) {
-            console.log("data.psicologo",data.paciente)
             getCitasPendientesByPsicologo(data.paciente.id).then((data) => {
-              console.log("data", data);
               const elem = data.map((cita) => {
                 return (
                   <TarjetaCita

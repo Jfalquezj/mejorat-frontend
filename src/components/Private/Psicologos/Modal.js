@@ -90,17 +90,19 @@ export const Modal = ({
   const modalRef = useRef();
   const [value, setValue] = React.useState(new Date("2021-08-18T21:11:54"));
   const [descripcion, setDescripcion] = useState("");
-
+  
   const handleChange = (newValue) => {
     setValue(newValue);
     console.log("value", value);
   };
-
+  
   const handlePedirCita = (event) => {
     event.preventDefault();
+    console.log("psicologo_id",psicologo_id)
+    console.log("paciente_id",paciente_id)
     const cita = {
       fecha: value,
-      lugar,
+      lugar: lugar,
       descripcion: descripcion,
       psicologo_id: psicologo_id,
       paciente_id: paciente_id,
@@ -109,7 +111,6 @@ export const Modal = ({
       .then((data) => {
         console.log(data);
         if (data) {
-          console.log("pedir cita data",data)
           setShowModal(false);
         }
       })

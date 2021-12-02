@@ -105,7 +105,6 @@ const Profile = () => {
             </Column>
             <Column>
               <Field>Teléfono: {patient ? patient.User.phone : ""}</Field>
-              <Field>Especializacion: {patient ? patient.especializacion : ""}</Field>
               <Field>
               Calificacion: {patient ? patient.calificacion : ""}
               </Field>

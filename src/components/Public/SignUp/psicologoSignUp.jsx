@@ -47,8 +47,7 @@ const PsicologoSignUp = (props) => {
   const signUpPsicologo = (userId) => {
     const userInfo = {
         tarifa_por_hora: tarifa,
-        horas_trabajadas: horas,
-        calificacion: calificacion,
+        calificacion: 5,
         especializacion: especializacion,
         UserId: userId
       };
@@ -108,24 +107,6 @@ const PsicologoSignUp = (props) => {
               name="tarifa"
               setState={setTarifa}
               state={tarifa}
-            />
-            <Input
-              key="horas"
-              title="Horas de trabajo"
-              type="text"
-              id="horas"
-              name="horas"
-              setState={setHoras}
-              state={horas}
-            />
-            <Input
-              key="calificacion"
-              title="Calificación"
-              type="text"
-              id="calificacion"
-              name="calificacion"
-              setState={setCalificacion}
-              state={calificacion}
             />
             <Input
               key="especializacion"
