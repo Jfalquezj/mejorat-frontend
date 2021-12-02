@@ -12,7 +12,6 @@ import {
   Field,
 } from "./profileelements";
 import Foto from "../../../lib/ui/vectors/fotopaciente";
-import { BsCalendarFill } from "react-icons/bs";
 import SelectIcon from "../../../lib/ui/icons/icons";
 import { getPaciente } from "../../../services/pacienteServices";
 import { getPsicologo } from "../../../services/psicologoServices";

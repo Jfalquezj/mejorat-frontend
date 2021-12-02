@@ -54,6 +54,11 @@ const getCitasCompletadasByPsicologo = async (psicologoId) => {
   return dataFiltered;
 };
 
+const createCita = async (cita) => {
+  const data = await post(`cita/create`, cita);
+  return data;
+};
+
 const confirmarCita = async (citaId) => {
   await post(`cita/confirmarCita/${citaId}`);
 };
@@ -94,4 +99,5 @@ export {
   cancelarCita,
   completarCita,
   updateCita,
+  createCita,
 };

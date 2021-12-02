@@ -6,6 +6,7 @@ import Input from "../../../common/Input";
 import Form from "../../../common/Form";
 import Button from "../../../common/Button";
 import { completarCita, updateCita } from "../../../../services/citaServices";
+import TextArea from "../../../common/TextArea";
 
 const Background = styled.div`
   width: 100%;
@@ -130,7 +131,7 @@ export const CitasModal = ({ showModal, setShowModal, citaId }) => {
           <ModalWrapper showModal={showModal}>
             <ModalContent>
               <Form>
-                <Input
+                <TextArea
                   key="descripcion"
                   title="Recomendaciones y/o medicamentos "
                   type="text"

@@ -9,8 +9,6 @@ export default function Psicologos() {
   useEffect(() => {
     getallpsicologos().then((data) => {
       const elem = data.map((psicologo) => {
-        console.log("psicologo.User",psicologo.User)
-        console.log("psicologo.User.name",psicologo.User.name)
         return (
           <Link to={`/psicologo/${psicologo.id}`} style={{textDecoration: "none",color:'black'}}>
             <Tarjetapsicologos
