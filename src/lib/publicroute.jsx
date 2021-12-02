@@ -7,7 +7,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   // Add your own authentication on the below line.
   const { user, isLoggedIn } = useContext(AuthContext);
   const isAuth = isLoggedIn();
-
+  
   return (
     <Route
       {...rest}

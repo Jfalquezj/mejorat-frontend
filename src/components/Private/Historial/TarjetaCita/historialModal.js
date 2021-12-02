@@ -6,7 +6,7 @@ import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import DateAdapter from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TextField from "@mui/material/TextField";
-import TimePicker from '@mui/lab/TimePicker';
+import TimePicker from "@mui/lab/TimePicker";
 
 const Background = styled.div`
   width: 100%;
@@ -76,13 +76,9 @@ const CloseModalButton = styled(MdClose)`
   z-index: 10;
 `;
 
-export const Modal = ({ showModal, setShowModal }) => {
+export const HistorialModal = ({ showModal, setShowModal, descripcion }) => {
   const modalRef = useRef();
-  const [value, setValue] = React.useState(new Date("2021-08-18T21:11:54"));
 
-  const handleChange = (newValue) => {
-    setValue(newValue);
-  };
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
       setShowModal(false);
@@ -111,27 +107,8 @@ export const Modal = ({ showModal, setShowModal }) => {
           <ModalWrapper showModal={showModal}>
             <ModalContent>
               <form>
-                <LocalizationProvider dateAdapter={DateAdapter}>
-                  <h1>Pedir cita</h1>
-                  <h3>Hora de la cita</h3>
-                  <TimePicker
-                    label="Time"
-                    value={value}
-                    onChange={handleChange}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                  <h3>Dia de la cita</h3>
-                  <DesktopDatePicker
-                    label="Date desktop"
-                    inputFormat="MM/dd/yyyy"
-                    value={value}
-                    onChange={handleChange}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                  <h3>Descripcion</h3>
-                  <textarea style={{ width: "100%" }} />
-                  <button>Enviar cita</button>
-                </LocalizationProvider>
+                <h2>Recomendaciones y/o medicamentos: </h2>
+                <p>{descripcion}</p>
               </form>
             </ModalContent>
             <CloseModalButton

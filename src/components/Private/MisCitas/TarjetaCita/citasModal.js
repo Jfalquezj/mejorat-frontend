@@ -1,12 +1,11 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useRef, useEffect, useCallback, useState } from "react";
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
 import ReactDom from "react-dom";
-import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
-import DateAdapter from "@mui/lab/AdapterMoment";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import TextField from "@mui/material/TextField";
-import TimePicker from '@mui/lab/TimePicker';
+import Input from "../../../common/Input";
+import Form from "../../../common/Form";
+import Button from "../../../common/Button";
+import { completarCita, updateCita } from "../../../../services/citaServices";
 
 const Background = styled.div`
   width: 100%;
@@ -76,13 +75,11 @@ const CloseModalButton = styled(MdClose)`
   z-index: 10;
 `;
 
-export const Modal = ({ showModal, setShowModal }) => {
+export const CitasModal = ({ showModal, setShowModal, citaId }) => {
   const modalRef = useRef();
-  const [value, setValue] = React.useState(new Date("2021-08-18T21:11:54"));
+  const [descripcion, setDescripcion] = useState("");
+  const [duracion, setDuracion] = useState("");
 
-  const handleChange = (newValue) => {
-    setValue(newValue);
-  };
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
       setShowModal(false);
@@ -99,6 +96,28 @@ export const Modal = ({ showModal, setShowModal }) => {
     [setShowModal, showModal]
   );
 
+  const handleCompletar = (event) => {
+    event.preventDefault();
+    updateCita(citaId,descripcion,duracion)
+    .then((data) => {
+      console.log(data);
+      if (data) {
+        completarCita(citaId)
+        .then((data) => {
+          if(data){
+            setShowModal(false);
+          }
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
+      }
+    })
+    .catch((err) => {
+      console.log("err", err);
+    });
+  };
+
   useEffect(() => {
     document.addEventListener("keydown", keyPress);
     return () => document.removeEventListener("keydown", keyPress);
@@ -110,29 +129,35 @@ export const Modal = ({ showModal, setShowModal }) => {
         <Background onClick={closeModal} ref={modalRef}>
           <ModalWrapper showModal={showModal}>
             <ModalContent>
-              <form>
-                <LocalizationProvider dateAdapter={DateAdapter}>
-                  <h1>Pedir cita</h1>
-                  <h3>Hora de la cita</h3>
-                  <TimePicker
-                    label="Time"
-                    value={value}
-                    onChange={handleChange}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                  <h3>Dia de la cita</h3>
-                  <DesktopDatePicker
-                    label="Date desktop"
-                    inputFormat="MM/dd/yyyy"
-                    value={value}
-                    onChange={handleChange}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                  <h3>Descripcion</h3>
-                  <textarea style={{ width: "100%" }} />
-                  <button>Enviar cita</button>
-                </LocalizationProvider>
-              </form>
+              <Form>
+                <Input
+                  key="descripcion"
+                  title="Recomendaciones y/o medicamentos "
+                  type="text"
+                  id="descripcion"
+                  name="descripcion"
+                  placeholder=""
+                  setState={setDescripcion}
+                  state={descripcion}
+                />
+                <Input
+                  key="duracion"
+                  title="Duración de la cita: "
+                  type="text"
+                  id="duracion"
+                  name="duracion"
+                  placeholder=""
+                  setState={setDuracion}
+                  state={duracion}
+                />
+              </Form>
+              <Button
+                fluid
+                text="Completar"
+                large
+                primary
+                onClick={handleCompletar}
+              ></Button>
             </ModalContent>
             <CloseModalButton
               aria-label="Close modal"

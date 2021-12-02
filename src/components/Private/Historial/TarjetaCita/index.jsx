@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import {
   DivTarjeta,
   DivInfo,
@@ -9,6 +10,7 @@ import {
 import { confirmarCita } from "../../../../services/citaServices";
 import Foto from "../../../../lib/ui/vectors/fotopsicologo";
 import Button from "../../../common/Button";
+import { HistorialModal } from "./historialModal";
 
 export default function TarjetaCita(props) {
   const {
@@ -22,6 +24,12 @@ export default function TarjetaCita(props) {
     role,
   } = props;
 
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal((prev) => !prev);
+  };
+
   let user = localStorage.getItem("user");
 
   const roleButton = () => {
@@ -29,23 +37,26 @@ export default function TarjetaCita(props) {
       const jsonUser = user && JSON.parse(user);
       const role = jsonUser?.role;
       if (role === "Psicologo") {
+        return <p>Completada</p>;
+      } else if (role === "Paciente") {
         return (
-          <div onClick={() => confirmarCita(id)}>
-            <Button text="Confirmar" primary fluid />
+          <div>
+            <Button onClick={openModal} text="Ver más" primary fluid />
+            <HistorialModal
+              showModal={showModal}
+              setShowModal={setShowModal}
+              descripcion={descripcion}
+            />
           </div>
         );
-      } else if (role === "Paciente") {
-        return <p>Espera a confirmar..</p>;
       }
     } catch (e) {
       console.log("error", e);
       const role = user?.role;
       if (role === "Psicologo") {
-        return (
-          <Button onClick={confirmarCita(id)} text="Confirmar" primary fluid />
-        );
+        return <p>Completada</p>;
       } else if (role === "Paciente") {
-        return <p>Espera a confirmar..</p>;
+        return <Button text="Ver más" primary fluid />;
       }
     }
   };
@@ -62,8 +73,8 @@ export default function TarjetaCita(props) {
         Estado: <p>{estado}</p>
       </DivInfo>
       <DivInfoBorder>
-        <p>Descripción:</p>
-        <p>{descripcion}</p>
+        <p>Duracion:</p>
+        <p>{duracion}</p>
       </DivInfoBorder>
       <Precio>
         <p>Lugar: {lugar}</p>

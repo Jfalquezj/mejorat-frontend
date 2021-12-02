@@ -13,14 +13,14 @@ export default function Perfilpsicologo() {
     setShowModal(prev => !prev);
   };
   return (
-    <DivPerfil>
+    <DivPerfil style={{marginTop: '20px'}}>
       <Row1>
         <Foto></Foto>
         <h2>{id}</h2>
         <h2>Precio</h2>
       </Row1>
       <Row2>
-        <p>
+        <p  style={{marginTop: '20px'}}>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
           since the 1500s, when an unknown printer took a galley of type and
@@ -31,7 +31,7 @@ export default function Perfilpsicologo() {
           more recently with desktop publishing software like Aldus PageMaker
           including versions of Lorem Ipsum.{" "}
         </p>
-        <div onClick={openModal}>Agendar Cita</div>
+        <div style ={{background:"#1ABC9C",height:"60px",borderRadius:"10px",marginTop:"20px" }} onClick={openModal}>Agendar Cita</div>
         <Modal showModal={showModal} setShowModal={setShowModal} />
       </Row2>
     </DivPerfil>

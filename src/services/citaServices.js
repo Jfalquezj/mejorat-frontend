@@ -55,8 +55,7 @@ const getCitasCompletadasByPsicologo = async (psicologoId) => {
 };
 
 const confirmarCita = async (citaId) => {
-  const data = await post(`cita/confirmarCita/${citaId}`);
-  return data;
+  await post(`cita/confirmarCita/${citaId}`);
 };
 
 const aplazarCita = async (citaId) => {
@@ -74,6 +73,15 @@ const completarCita = async (citaId) => {
   return data;
 };
 
+const updateCita = async (citaId, descripcion, duracion) => {
+  const update = {
+    descripcion: descripcion,
+    duracion: duracion
+};
+  const data = await post(`cita/${citaId}`, update);
+  return data;
+};
+
 export {
   getCitasPendientesByPaciente,
   getCitasPendientesByPsicologo,
@@ -85,4 +93,5 @@ export {
   aplazarCita,
   cancelarCita,
   completarCita,
+  updateCita,
 };

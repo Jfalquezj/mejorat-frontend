@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  getCitasConfirmadasByPaciente,
-  getCitasConfirmadasByPsicologo,
+  getCitasCompletadasByPaciente,
+  getCitasCompletadasByPsicologo,
 } from "../../../services/citaServices";
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
@@ -10,7 +10,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import { getPaciente } from "../../../services/pacienteServices";
 import { getPsicologo } from "../../../services/psicologoServices";
 
-export default function MisCitas() {
+export default function Historial() {
   const [citas, setCitas] = useState([]);
   const { user } = useContext(AuthContext);
 
@@ -45,8 +45,7 @@ export default function MisCitas() {
       getPaciente(ID)
         .then((data) => {
           if (data.paciente) {
-            getCitasConfirmadasByPaciente(data.paciente.id).then((data) => {
-              console.log("data", data);
+            getCitasCompletadasByPaciente(data.paciente.id).then((data) => {
               const elem = data.map((cita) => {
                 return (
                     <TarjetaCita
@@ -75,21 +74,20 @@ export default function MisCitas() {
       getPsicologo(ID)
         .then((data) => {
           if (data.paciente) {
-            getCitasConfirmadasByPsicologo(data.paciente.id).then((data) => {
-              console.log("data", data);
+            getCitasCompletadasByPsicologo(data.paciente.id).then((data) => {
               const elem = data.map((cita) => {
                 return (
-                    <TarjetaCita
-                      key={cita.cita_id}
-                      id={cita.cita_id}
-                      fecha={cita.fecha}
-                      paciente_id={cita.paciente_id}
-                      duracion={cita.duracion}
-                      descripcion={cita.descripcion}
-                      estado={cita.estado}
-                      lugar={cita.lugar}
-                      role={role}
-                    />
+                  <TarjetaCita
+                    key={cita.cita_id}
+                    id={cita.cita_id}
+                    fecha={cita.fecha}
+                    paciente_id={cita.paciente_id}
+                    duracion={cita.duracion}
+                    descripcion={cita.descripcion}
+                    estado={cita.estado}
+                    lugar={cita.lugar}
+                    role={role}
+                  />
                 );
               });
               setCitas(elem);
@@ -104,7 +102,7 @@ export default function MisCitas() {
 
   return (
     <div>
-      <h1>Mis citas</h1>
+      <h1>Citas completadas</h1>
       {citas}
     </div>
   );

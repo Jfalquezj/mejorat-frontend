@@ -23,18 +23,28 @@ const Login = () => {
   const [showAlert, setShowAlert] = useState(false);
   const auth = useContext(AuthContext);
   const history = useHistory();
+
+  const redirect = (role) => {
+    if (role === "Paciente") {
+      return "/dashboard";
+    } else if (role === "Psicologo") {
+      return "/citas";
+    }
+  };
   function handleClick() {
     setShowAlert(false);
   }
+
   const handleLogin = (event) => {
     event.preventDefault();
     loginUser(username, password)
       .then((data) => {
-        console.log(data)
+        console.log(data);
         if (data.token) {
           const user = data;
+          console.log("login user", user)
           auth.login(user);
-          history.push("/dashboard");
+          history.push(redirect(user.role));
         } else if (!data.token) {
           setShowAlert(true);
         }
@@ -75,7 +85,10 @@ const Login = () => {
           />
         </Form>
         <Divforgot>
-          <Link to="/recover"> <ALogin>Olvidó su contraseña?</ALogin></Link>
+          <Link to="/recover">
+            {" "}
+            <ALogin>Olvidó su contraseña?</ALogin>
+          </Link>
         </Divforgot>
         <Button
           fluid
@@ -87,7 +100,10 @@ const Login = () => {
         <Divaccount>
           <PLogin>
             No tienes cuenta?{" "}
-            <Link to="/signup">  <ALogin>Unete de manera gratuita</ALogin></Link>
+            <Link to="/signup">
+              {" "}
+              <ALogin>Unete de manera gratuita</ALogin>
+            </Link>
           </PLogin>
         </Divaccount>
       </div>

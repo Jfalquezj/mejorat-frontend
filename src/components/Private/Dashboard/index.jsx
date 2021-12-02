@@ -8,6 +8,7 @@ import MisCitas from '../MisCitas/index';
 import Pendientes from '../Pendientes/index';
 import CitaPage from '../CitaPage/index';
 import PerfilP from '../Psicologos/perfil/perfilpsicologo';
+import Historial from '../Historial/index';
 
 const Dashboard = () => {
   const [title, setTitle] = useState("");
@@ -32,6 +33,9 @@ const Dashboard = () => {
               </Route>
               <Route path="/citas">
                 <MisCitas />
+              </Route>
+              <Route path="/historial">
+                <Historial />
               </Route>
               <Route path="/pendientes">
                 <Pendientes />

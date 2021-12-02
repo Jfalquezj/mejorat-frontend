@@ -18,14 +18,27 @@ const Side = ({ active }) => {
   const [isMobile, setMobile] = useState(window.innerWidth > 1200);
   const history = useHistory();
   const { user } = useContext(AuthContext);
+  let userLocalStorage = localStorage.getItem("user");
   const getRole = () => {
     try {
-      const jsonUser = user && JSON.parse(user);
-      const role = jsonUser?.role;
-      return role;
+      const jsonUserLocalStorage = userLocalStorage && JSON.parse(userLocalStorage);
+      const role = jsonUserLocalStorage?.role;
+      if (!role) {
+        try {
+          const jsonUser = user && JSON.parse(user);
+          const role = jsonUser?.role;
+          return role;
+        } catch (e) {
+          console.log("error", e);
+          const role = user?.role;
+          return role;
+        }
+      } else {
+        return role;
+      }
     } catch (e) {
       console.log("error", e);
-      const role = user?.role;
+      const role = userLocalStorage?.role;
       return role;
     }
   };
@@ -48,39 +61,49 @@ const Side = ({ active }) => {
   let result = null;
 
   const roleShow = () => {
-    console.log("sidebar")
+    console.log("getRole()", getRole());
     if (getRole() === "Paciente") {
       result = restricted.filter((word) =>
-      [
-        "Psicologos",
-        "Mis Citas",
-        "Pendientes",
-        "Historial",
-        "Mi Perfil",
-      ].includes(word.title)
+        [
+          "Psicologos",
+          "Mis Citas",
+          "Pendientes",
+          "Historial",
+          "Mi Perfil",
+        ].includes(word.title)
       );
-    };
+    }
     if (getRole() === "Psicologo") {
       result = restricted.filter((word) =>
-      [
-        "Mis Citas",
-        "Pendientes",
-        "Historial",
-        "Mi Perfil",
-      ].includes(word.title)
+        ["Mis Citas", "Pendientes", "Historial", "Mi Perfil"].includes(
+          word.title
+        )
       );
-    };
-  }
+    }
+  };
 
   return (
     <NavContainer style={{ overflowY: "auto", height: "calc(100vh )" }}>
-      <div style={{display: "flex", alignContent:"center",width: "100%",justifyContent: "center",marginBottom:"20px", marginTop:"20px"}}><Vectorbrain></Vectorbrain></div>
+      <div
+        style={{
+          display: "flex",
+          alignContent: "center",
+          width: "100%",
+          justifyContent: "center",
+          marginBottom: "20px",
+          marginTop: "20px",
+        }}
+      >
+        <Vectorbrain></Vectorbrain>
+      </div>
       {roleShow()}
       {result.map(({ path, title, index }) => (
         <SidebarElements key={index} to={path}>
-          <DivElement style={{ color: active === title ? "#1da1f2" : "#333333" }}>
-            <SelectIcon  name={title} />
-            <PHome >{title}</PHome>
+          <DivElement
+            style={{ color: active === title ? "#1da1f2" : "#333333" }}
+          >
+            <SelectIcon name={title} />
+            <PHome>{title}</PHome>
           </DivElement>
         </SidebarElements>
       ))}
